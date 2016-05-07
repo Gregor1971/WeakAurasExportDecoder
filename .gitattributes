@@ -14,4 +14,5 @@ WeakAurasTimerBarCreator/WeakAurasStub.lua -text
 WeakAurasTimerBarCreator/WeakAurasTimerBarCreator.csproj -text
 WeakAurasTimerBarCreator/WoWStub.lua -text
 WeakAurasTimerBarCreator/bit.lua -text
+WeakAurasTimerBarCreator/globalAliases.lua -text
 WeakAurasTimerBarCreator/packages.config -text

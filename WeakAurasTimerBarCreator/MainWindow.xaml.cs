@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MoonSharp.Interpreter;
+using DynamicLua;
 
 namespace WeakAurasTimerBarCreator
 {
@@ -22,6 +22,7 @@ namespace WeakAurasTimerBarCreator
     public partial class MainWindow : Window
     {
         private const string _wowRoot = @"C:\WoW";
+        dynamic lua;
 
         public MainWindow()
         {
@@ -31,21 +32,37 @@ namespace WeakAurasTimerBarCreator
 
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Script lua = new Script(CoreModules.Preset_Complete);
+            //Script lua = new Script(CoreModules.Preset_Complete);
+            lua = new DynamicLua.DynamicLua();
 
+            lua("loadstring = load");
+
+            lua("math.mod = math.modf");
             lua.DoFile(@"bit.lua");
+
             lua.DoFile(@"WoWStub.lua");
 
-            lua.DoString("strsub, strsplit, strlower, strmatch, strtrim = string.sub, string.split, string.lower, string.match, string.trim");
+            lua("strsub, strsplit, strlower, strmatch, strtrim = string.sub, string.split, string.lower, string.match, string.trim");
 
             lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\LibStub\LibStub.lua");
             lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\LibCompress\LibCompress.lua");
+            lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\AceSerializer-3.0\AceSerializer-3.0.lua");
+            //lua.DoFile(_wowRoot + "\"\\Interface\\AddOns\\WeakAuras\\libs\\CallbackHandler - 1.0\\CallbackHandler-1.0.lua\"");
+            //lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\AceComm-3.0\AceComm-3.0.lua");
 
-            lua.DoString("local f = load(\"local i = 5; i = i + 1\"); f()");
-
-            //lua.DoString("loadstring = load");
             lua.DoFile(@"WeakAurasStub.lua");
             //lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\Transmission.lua");
+        }
+
+        private void CompressButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeCompressButton_Click(object sender, RoutedEventArgs e)
+        {
+            var table = lua.StringToTable(CompressedText.Text, true);
+            DeCompressedText.Text = table;
         }
     }
 }
