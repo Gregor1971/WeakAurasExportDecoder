@@ -1,1 +1,17 @@
 * text=auto !eol
+/WeakAurasTimerBarCreator.sln -text
+WeakAurasTimerBarCreator/App.config -text
+WeakAurasTimerBarCreator/App.xaml -text
+WeakAurasTimerBarCreator/App.xaml.cs -text
+WeakAurasTimerBarCreator/MainWindow.xaml -text
+WeakAurasTimerBarCreator/MainWindow.xaml.cs -text
+WeakAurasTimerBarCreator/Properties/AssemblyInfo.cs -text
+WeakAurasTimerBarCreator/Properties/Resources.Designer.cs -text
+WeakAurasTimerBarCreator/Properties/Resources.resx -text
+WeakAurasTimerBarCreator/Properties/Settings.Designer.cs -text
+WeakAurasTimerBarCreator/Properties/Settings.settings -text
+WeakAurasTimerBarCreator/WeakAurasStub.lua -text
+WeakAurasTimerBarCreator/WeakAurasTimerBarCreator.csproj -text
+WeakAurasTimerBarCreator/WoWStub.lua -text
+WeakAurasTimerBarCreator/bit.lua -text
+WeakAurasTimerBarCreator/packages.config -text
