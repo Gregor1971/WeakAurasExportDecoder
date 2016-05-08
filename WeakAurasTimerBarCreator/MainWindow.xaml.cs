@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DynamicLua;
+//using MoonSharp.Interpreter;
+
 
 namespace WeakAurasTimerBarCreator
 {
@@ -38,7 +40,10 @@ namespace WeakAurasTimerBarCreator
             lua("loadstring = load");
 
             lua("math.mod = math.modf");
-            lua.DoFile(@"bit.lua");
+            //lua.DoFile(@"bit.lua");
+            //lua.DoFile(@"bit = numberlua.lua");
+            lua("package.path = '?.lua'");
+            lua("bit = require 'numberlua'");
 
             lua.DoFile(@"WoWStub.lua");
 
@@ -61,8 +66,10 @@ namespace WeakAurasTimerBarCreator
 
         private void DeCompressButton_Click(object sender, RoutedEventArgs e)
         {
-            var table = lua.StringToTable(CompressedText.Text, true);
-            DeCompressedText.Text = table;
+            //var auraTable = lua.StringToTable(CompressedText.Text, true);
+            //var auraText = lua.table.tostring(auraTable);
+            var auraText = lua.TransportStringToDisplay(CompressedText.Text);
+            DeCompressedText.Text = auraText;
         }
     }
 }
