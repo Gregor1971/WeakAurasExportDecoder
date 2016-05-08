@@ -1,4 +1,7 @@
-﻿WeakAuras = {}
+﻿package.path = "?.lua"
+local json = require("dkjson")
+
+WeakAuras = {}
 
 local tinsert, tconcat, tremove = table.insert, table.concat, table.remove
 local fmt, tostring, string_char, strsplit = string.format, tostring, string.char, strsplit
@@ -122,54 +125,44 @@ function StringToTable(inString, fromChat)
     return deserialized;
 end
 
-function DecodeString(inString, fromChat)
-    local decoded;
-    if(fromChat) then
-        decoded = decodeB64(inString);
-    else
-        decoded = Encoder:Decode(inString);
-    end
-	return decoded;
-end
-
-function table.val_to_str ( v )
-  if "string" == type( v ) then
-    v = string.gsub( v, "\n", "\\n" )
-    if string.match( string.gsub(v,"[^'\"]",""), '^"+$' ) then
-      return "'" .. v .. "'"
-    end
-    return '"' .. string.gsub(v,'"', '\\"' ) .. '"'
-  else
-    return "table" == type( v ) and table.tostring( v ) or
-      tostring( v )
-  end
-end
-
-function table.key_to_str ( k )
-  if "string" == type( k ) and string.match( k, "^[_%a][_%a%d]*$" ) then
-    return k
-  else
-    return "[" .. table.val_to_str( k ) .. "]"
-  end
-end
-
-function table.tostring( tbl )
-  local result, done = {}, {}
-  for k, v in ipairs( tbl ) do
-    table.insert( result, table.val_to_str( v ) )
-    done[ k ] = true
-  end
-  for k, v in pairs( tbl ) do
-    if not done[ k ] then
-      table.insert( result,
-        table.key_to_str( k ) .. "=" .. table.val_to_str( v ) )
-    end
-  end
-  return "{" .. table.concat( result, "," ) .. "}"
-end
-
 function TransportStringToDisplay(inString)
 	local tbl = StringToTable(inString, true)
-	local display = table.tostring(tbl)
+	--local display = serializeTable(tbl, "AuraTable", true)
+	local display = json.encode(tbl, {indent = true})
 	return display;
+end
+
+function DisplayToTransportString(inDisplay)
+	local tbl = json.decode(inDisplay)
+	local transString = TableToString(tbl, true)
+	return transString;
+end
+
+function serializeTable(val, name, skipnewlines, depth)
+    skipnewlines = skipnewlines or false
+    depth = depth or 0
+
+    local tmp = string.rep(" ", depth)
+
+    if name then tmp = tmp .. name .. " = " end
+
+    if type(val) == "table" then
+        tmp = tmp .. "{" .. (not skipnewlines and "\n" or "")
+
+        for k, v in pairs(val) do
+            tmp =  tmp .. serializeTable(v, k, skipnewlines, depth + 1) .. "," .. (not skipnewlines and "\n" or "")
+        end
+
+        tmp = tmp .. string.rep(" ", depth) .. "}"
+    elseif type(val) == "number" then
+        tmp = tmp .. tostring(val)
+    elseif type(val) == "string" then
+        tmp = tmp .. string.format("%q", val)
+    elseif type(val) == "boolean" then
+        tmp = tmp .. (val and "true" or "false")
+    else
+        tmp = tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
+    end
+
+    return tmp
 end

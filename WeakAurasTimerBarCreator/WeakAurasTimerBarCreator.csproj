@@ -93,7 +93,9 @@
     <Content Include="bit.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="globalAliases.lua" />
+    <Content Include="dkjson.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="numberlua.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

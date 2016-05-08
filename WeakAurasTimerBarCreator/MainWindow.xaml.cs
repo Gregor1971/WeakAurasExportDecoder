@@ -48,6 +48,7 @@ namespace WeakAurasTimerBarCreator
             lua.DoFile(@"WoWStub.lua");
 
             lua("strsub, strsplit, strlower, strmatch, strtrim = string.sub, string.split, string.lower, string.match, string.trim");
+            lua("sort = table.sort");
 
             lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\LibStub\LibStub.lua");
             lua.DoFile(_wowRoot + @"\Interface\AddOns\WeakAuras\libs\LibCompress\LibCompress.lua");
@@ -61,7 +62,8 @@ namespace WeakAurasTimerBarCreator
 
         private void CompressButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var transString = lua.DisplayToTransportString(DeCompressedText.Text);
+            CompressedText.Text = transString;
         }
 
         private void DeCompressButton_Click(object sender, RoutedEventArgs e)
