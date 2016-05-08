@@ -3,6 +3,20 @@ local json = require("dkjson")
 
 WeakAuras = {}
 
+function TransportStringToDisplay(inString)
+	local tbl = StringToTable(inString, true)
+	local displayString = json.encode(tbl, {indent = true})
+	return displayString;
+end
+
+function DisplayToTransportString(inDisplay)
+	local tbl = json.decode(inDisplay)
+	local transString = TableToString(tbl, true)
+	return transString;
+end
+
+
+-- The following stolen from WeakAuras\Transmission.lua
 local tinsert, tconcat, tremove = table.insert, table.concat, table.remove
 local fmt, tostring, string_char, strsplit = string.format, tostring, string.char, strsplit
 local select, pairs, next, type, unpack = select, pairs, next, type, unpack
@@ -125,15 +139,3 @@ function StringToTable(inString, fromChat)
     return deserialized;
 end
 
-function TransportStringToDisplay(inString)
-	local tbl = StringToTable(inString, true)
-	--local display = serializeTable(tbl, "AuraTable", true)
-	local display = json.encode(tbl, {indent = true})
-	return display;
-end
-
-function DisplayToTransportString(inDisplay)
-	local tbl = json.decode(inDisplay)
-	local transString = TableToString(tbl, true)
-	return transString;
-end
