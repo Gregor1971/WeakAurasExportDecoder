@@ -15,27 +15,33 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="CompressedText" TextWrapping="Wrap" AcceptsReturn="True" Text="dSJyeaGAjiTEjG2fHABsvZMGFROtd1VKa5Bkv(PeIDQszVIDRK9tzusedtsnoPY5vQ6WKAWQA4suwNeQoLsHJbW5iPfQs1sLaSyuflxfpucPNs1YG45aDjjrtLOjtIPJ8muSijsxg01vyJkLEmkTzuz7ssFuPOzjHYNrv9DjOgPeetdsgnQsJxs4KsG6weY1uj3tIQvcP(lGUTuoaImElUsCLiJZnxKJlqyUHGko7uyEIm3aKT9QQmDixm1m9Daqqvhorxm5gs22RQY0HCXuZ03babvD4eDXKBmzBVQkthYftntFhaeu1Ht0ftO4kyWYe07LWkO4vYgNDasZMewbfNBSyj8CvYggA7T3E7XC2Rhhnq4QQyN0hsIBq7jEHldT92BV92BV92lmz1c2ZoB8OjjUbTVC73essCdwYg2lYE94Obcxvf7K(qsCdAOT3E7T3E7T3(dKgNL9G0bV4lMBEAAQKsRSgrP4vwJOuAXSND24rtsCdwq91fZE2zJhnjXnyL91ByOT3E7Thkacn02BV92BV92B)bsJZY(sbWuCMDLAOT3E7ThUum0WLIH2qBOn0Xpq(45sUVmyCcwbfhVWeq2zRmbibvYnaX1SeEUaJmoiPpuKXvMazhG0SL7XzhG0SfxpoAGWvvXoPpKe3G2xU9BcjjUblzJqXXlmfzCLjq2binB5EC2binBX1JJgiCvvSt6djXnO9LB)clekohEHb5nY4ktGSdqA2Y94SdqA2IRhhnq4QQyN0hsIBq7l3(fwiuO40bZNp8ezCAFzW4GKMgGXhGqGAHcR3dsNbm3JpwWQWffxpOzCyv4IIx05sbt45cm(aecCSWuUhkEHoajm3(4fqbVzHiJRvuWeEU0caPdMpF4bmYqX3xeooqiLTIUqUaG03P2XWOwJuVlCIqXeVWyfI3SD3LQAhshaevKou1Q9HteQDXxJM8G5ZhEaZnaXROiCCGqkB7QzUqyqQrPEH01H0forOqfNxiMpVu22V76IrvvD3ovK((R(WjcvxCHPwjY4KwaUOiJ3gceoYqHIRG54WSdbAFKXBdbchzOqXptbyKXBdbchzOqX50SeEUImEBiq4idfk(aecKD24rt5E8JMfgz82qGWrgkuO4yL4fD24rt2lXnyO4GXredqCTyK(4vZnaOqaekb"/>
-        <TextBox Grid.Column="1" x:Name="DeCompressedText" TextWrapping="Wrap" AcceptsReturn="True"/>
-        <TextBox Grid.Column="2" x:Name="ReCompressedText" TextWrapping="Wrap" AcceptsReturn="True"/>
-        <Button Grid.Row="1" Content="Decode" Click="DeCompressButton_Click"/>
+        <TextBox x:Name="CompressedText" TextWrapping="Wrap" AcceptsReturn="True" />
+        <TextBox Grid.Column="1" x:Name="DeCompressedText" TextWrapping="Wrap" AcceptsReturn="True" />
+        <TextBox Grid.Column="2" x:Name="ReCompressedText" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" />
+        <Button Grid.Row="1" Margin="5" Content="Decode" Click="DeCompressButton_Click"/>
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Label Content="Find:"/>
-            <TextBox Grid.Column="1" x:Name="FindText"/>
+            <TextBox Grid.Column="1" x:Name="FindText" Margin="5"/>
             <Label Grid.Row="1" Content="Replace:"/>
-            <TextBox Grid.Column="1" Grid.Row="1" x:Name="ReplaceText"/>
-            <Button Grid.ColumnSpan="2" Grid.Row="2" Content="Replace All"/>
+            <TextBox Grid.Column="1" Grid.Row="1" x:Name="ReplaceText" Margin="5"/>
+            <Button Grid.ColumnSpan="2" Grid.Row="2" Margin="5" Content="Replace All" Click="FindReplaceButton_Click"/>
         </Grid>
-        <Button Grid.Column="3" Grid.Row="1" Content="Re-Code" Click="CompressButton_Click"/>
+        <Button Grid.Column="3" Grid.Row="1" Margin="5" Content="Re-Code" Click="CompressButton_Click"/>
+        <StatusBar Grid.ColumnSpan="3" Grid.Row="2" Height="20">
+            <StatusBarItem FontSize="10">
+                <TextBlock x:Name="Status" Text="Ready" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DynamicLua;
+using System.Text.RegularExpressions;
 //using MoonSharp.Interpreter;
 
 
@@ -51,16 +52,29 @@ namespace WeakAurasTimerBarCreator
             lua.DoFile(@"WeakAurasStub.lua");
         }
 
-        private void CompressButton_Click(object sender, RoutedEventArgs e)
-        {
-            var transString = lua.DisplayToTransportString(DeCompressedText.Text);
-            ReCompressedText.Text = transString;
-        }
-
         private void DeCompressButton_Click(object sender, RoutedEventArgs e)
         {
             var auraText = lua.TransportStringToDisplay(CompressedText.Text);
             DeCompressedText.Text = auraText;
+            Status.Text = "Aura Decoded";
+        }
+
+        private void CompressButton_Click(object sender, RoutedEventArgs e)
+        {
+            var transString = lua.DisplayToTransportString(DeCompressedText.Text);
+            ReCompressedText.Text = transString;
+            Status.Text = "Aura Re-Coded";
+        }
+
+        private void FindReplaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var auraText = DeCompressedText.Text;
+            var findText = FindText.Text ?? "";
+            var replaceText = ReplaceText.Text ?? "";
+            int count = new Regex(Regex.Escape(findText)).Matches(auraText).Count;
+            var replacedAuraText = auraText.Replace(findText, replaceText);
+            DeCompressedText.Text = replacedAuraText;
+            Status.Text = "Replaced " + count + " occurences of \"" + findText + "\" with \"" + replaceText + "\"";
         }
     }
 }
